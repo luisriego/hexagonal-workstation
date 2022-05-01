@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Functional;
 
 use App\Repository\DoctrineUserRepository;
-use App\Repository\UserRepository;
 use Doctrine\DBAL\Connection;
 use Hautelook\AliceBundle\PhpUnit\RecreateDatabaseTrait;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;

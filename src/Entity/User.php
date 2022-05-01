@@ -148,7 +148,7 @@ class User implements UserInterface
         return [];
     }
 
-    public function getSalt(): ?string
+    public function getSalt()
     {
         // TODO: Implement getSalt() method.
     }

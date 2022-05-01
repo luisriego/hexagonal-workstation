@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CreateUserActionTest extends FunctionalTestBase
 {
@@ -26,7 +27,7 @@ class CreateUserActionTest extends FunctionalTestBase
 
         $response = self::$baseClient->getResponse();
 
-        self::assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
+        self::assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
         $responseData = \json_decode($response->getContent(), true);
         self::assertArrayHasKey('name', $responseData);
         self::assertArrayHasKey('email', $responseData);
