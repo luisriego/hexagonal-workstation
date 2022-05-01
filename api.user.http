@@ -1,0 +1,53 @@
+POST http://{{host}}/api/v1/users/create
+Content-Type: application/json
+
+{
+  "name": "Luis",
+  "email": "luis@api.com"
+}
+
+###
+
+PUT http://{{host}}/api/v1/users/activate
+Content-Type: application/json
+
+{
+  "email": "pepelu@api.com",
+  "token": "cc4185b02a6aec6ffffc3d3b9610277e20f272b9",
+  "password": "password"
+}
+
+###
+
+POST http://{{host}}/api/v1/users/login_check
+Content-Type: application/json
+
+{
+  "username": "luis@api.com",
+  "password": "password"
+}
+
+###
+
+PUT http://{{host}}/api/v1/users/e7d732a6-286e-4fc3-942f-4d0c7e92ff3d/change_password
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "oldPass": "password",
+  "newPass": "new-password"
+}
+
+###
+
+GET http://{{host}}/api/v1/users/a154c8a5-bb2e-4f03-9720-0ac50ec08f12
+Accept: application/json
+Authorization: {{token}}
+
+###
+# Warning!! Remove this endpoint in production or implement ROLES will be necessary.
+GET http://{{host}}/api/v1/users
+Accept: application/json
+Authorization: {{token}}
+
+###
