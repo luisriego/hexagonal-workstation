@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Condo;
+namespace App\Tests\Functional\Workstation;
 
 use Doctrine\DBAL\DBALException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UpdateCondoActionTest extends CondoTestBase
+class UpdateWorkstationActionTest extends WorkstationTestBase
 {
     /**
      * @throws DBALException

@@ -25,7 +25,6 @@ class User implements UserInterface
     private ?string $avatar;
     private ?string $token;
     private ?string $password;
-    private Collection $condos;
 
     public function __construct(string $name, string $email)
     {
@@ -36,7 +35,6 @@ class User implements UserInterface
         $this->avatar = null;
         $this->token = \sha1(\uniqid());
         $this->isActive = false;
-        $this->condos = new ArrayCollection();
         $this->createdOn = new \DateTimeImmutable();
         $this->markAsUpdated();
     }
@@ -55,11 +53,11 @@ class User implements UserInterface
     {
         return $this->email;
     }
-
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
-    }
+//
+//    public function setEmail(string $email): void
+//    {
+//        $this->email = $email;
+//    }
 
     public function getToken(): ?string
     {
@@ -89,35 +87,6 @@ class User implements UserInterface
     public function setAvatar(?string $avatar): void
     {
         $this->avatar = $avatar;
-    }
-
-    /**
-     * @return ArrayCollection|Collection
-     */
-    public function getCondos(): ArrayCollection|Collection
-    {
-        return $this->condos;
-    }
-
-    public function addCondo(Condo $condo): void
-    {
-        if ($this->condos->contains($condo)) {
-            return;
-        }
-
-        $this->condos->add($condo);
-    }
-
-    public function removeCondo(Condo $condo): void
-    {
-        if ($this->condos->contains($condo)) {
-            $this->condos->removeElement($condo);
-        }
-    }
-
-    public function isMemberOfCondo(Condo $condo): bool
-    {
-        return $this->condos->contains($condo);
     }
 
     #[Pure]

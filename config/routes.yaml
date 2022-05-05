@@ -70,9 +70,9 @@ api_condo_remove_user:
     controller: App\Controller\Condo\RemoveUserFromCondoAction
     methods: [DELETE]
 
-api_condo_create:
-    path: /api/v1/condos/create
-    controller: App\Controller\Condo\CreateCondoAction
+api_workstation_create:
+    path: /api/v1/workstations/create
+    controller: App\Controller\Workstation\CreateWorkstationAction
     methods: [POST]
 
 api_condo_delete:

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Tests\Functional\Condo;
+namespace App\Tests\Functional\Workstation;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GetCondoActionTest extends CondoTestBase
+class GetWorkstationActionTest extends WorkstationTestBase
 {
 //    private const ENDPOINT = '/api/v1/condos';
 

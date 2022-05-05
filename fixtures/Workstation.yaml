@@ -1,0 +1,5 @@
+App\Entity\Workstation:
+  Workstation-1:
+    __construct:
+      number: '1234'
+      floor: '19'

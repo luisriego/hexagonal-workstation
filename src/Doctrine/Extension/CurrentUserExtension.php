@@ -6,14 +6,14 @@ namespace App\Doctrine\Extension;
 
 use App\Entity\Condo;
 use App\Entity\User;
-use App\Repository\DoctrineCondoRepository;
+use App\Repository\DoctrineWorkstationRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CurrentUserExtension
 {
-//    public function __construct(TokenStorageInterface $tokenStorage, DoctrineCondoRepository $condoRepository)
+//    public function __construct(TokenStorageInterface $tokenStorage, DoctrineWorkstationRepository $condoRepository)
 //    {  }
 //
 //    public function applyToCollection(

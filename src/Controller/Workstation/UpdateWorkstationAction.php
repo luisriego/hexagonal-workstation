@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Condo;
+namespace App\Controller\Workstation;
 
 use App\Entity\User;
 use App\Http\Response\ApiResponse;
-use App\Service\Condo\UpdateCondoService;
+use App\Service\Workstation\UpdateWorkstationService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-class UpdateCondoAction
+class UpdateWorkstationAction
 {
-    public function __construct(private UpdateCondoService $updateCondoService)
+    public function __construct(private readonly UpdateWorkstationService $updateWorkstationService)
     {
     }
 
@@ -24,7 +24,7 @@ class UpdateCondoAction
             throw new BadRequestHttpException('The Fantasy Name param is mandatory');
         }
 
-        $condo = $this->updateCondoService->__invoke($name, $id, $user);
+        $condo = $this->updateWorkstationService->__invoke($name, $id, $user);
 
         return new ApiResponse($condo->toArray());
     }

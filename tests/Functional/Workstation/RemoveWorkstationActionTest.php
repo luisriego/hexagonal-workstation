@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Tests\Functional\Condo;
+namespace App\Tests\Functional\Workstation;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RemoveCondoActionTest extends CondoTestBase
+class RemoveWorkstationActionTest extends WorkstationTestBase
 {
     public function testRemoveCondo(): void
     {

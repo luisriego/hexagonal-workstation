@@ -6,7 +6,7 @@ namespace App\Trait;
 
 trait IdentifierTrait
 {
-    protected string $id;
+    protected readonly string $id;
 
     public function getId(): string
     {
