@@ -12,23 +12,21 @@ use App\Repository\DoctrineWorkstationRepository;
 
 class UpdateWorkstationService
 {
-    public function __construct(private DoctrineWorkstationRepository $WorkstationRepository)
+    public function __construct(private readonly DoctrineWorkstationRepository $workstationRepository)
     {
     }
 
-    public function __invoke(string $name, string $id, User $user): Workstation
+    public function __invoke(string $map, string $id): Workstation
     {
-        if (null === $Workstation = $this->WorkstationRepository->findOneByIdIfActive($id)) {
+        if (null === $workstation = $this->workstationRepository->findOneByIdIfActive($id)) {
             throw WorkstationNotFoundException::fromId($id);
         }
 
-        if (!$Workstation->containsUser($user)) {
-            throw new UserHasNotAuthorizationException();
+        if ($map) {
+            $workstation->setMap($map);
+            $this->workstationRepository->save($workstation);
         }
 
-        $Workstation->setFantasyName($name);
-        $this->WorkstationRepository->save($Workstation);
-
-        return $Workstation;
+        return $workstation;
     }
 }

@@ -10,10 +10,10 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class GroupVoter extends Voter
 {
-    public const CONDO_READ = 'CONDO_READ';
-    public const CONDO_CREATE = 'CONDO_CREATE';
-    public const CONDO_UPDATE = 'CONDO_UPDATE';
-    public const CONDO_DELETE = 'CONDO_DELETE';
+    public final const CONDO_READ = 'CONDO_READ';
+    public final const CONDO_CREATE = 'CONDO_CREATE';
+    public final const CONDO_UPDATE = 'CONDO_UPDATE';
+    public final const CONDO_DELETE = 'CONDO_DELETE';
 
     protected function supports(string $attribute, $subject): bool
     {

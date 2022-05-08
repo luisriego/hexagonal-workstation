@@ -19,20 +19,13 @@ class User implements UserInterface
     use IdentifierTrait;
     use TimestampableTrait;
     use IsActiveTrait;
-
-    private string $name;
-    private string $email;
-    private ?string $avatar;
+    private ?string $avatar = null;
     private ?string $token;
-    private ?string $password;
+    private ?string $password = null;
 
-    public function __construct(string $name, string $email)
+    public function __construct(private string $name, private readonly string $email)
     {
         $this->id = Uuid::v4()->toRfc4122();
-        $this->name = $name;
-        $this->email = $email;
-        $this->password = null;
-        $this->avatar = null;
         $this->token = \sha1(\uniqid());
         $this->isActive = false;
         $this->createdOn = new \DateTimeImmutable();

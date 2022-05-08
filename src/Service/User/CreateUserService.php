@@ -9,7 +9,7 @@ use Doctrine\ORM\ORMException;
 
 class CreateUserService
 {
-    public function __construct(private DoctrineUserRepository $userRepository)
+    public function __construct(private readonly DoctrineUserRepository $userRepository)
     {
     }
 
@@ -23,7 +23,7 @@ class CreateUserService
 
         try {
             $this->userRepository->save($user);
-        } catch (ORMException $e) {
+        } catch (ORMException) {
             throw UserAlreadyExistsException::fromEmail($email);
         }
 

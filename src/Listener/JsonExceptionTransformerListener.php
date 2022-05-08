@@ -8,6 +8,7 @@ use App\Exception\InvalidEmailException;
 use App\Exception\User\UserAlreadyExistsException;
 use App\Exception\User\UserNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -19,21 +20,21 @@ class JsonExceptionTransformerListener
         $exception = $event->getThrowable();
 
         $data = [
-            'class' => \get_class($exception),
-            'code' => JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
+            'class' => $exception::class,
+            'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
             'message' => $exception->getMessage(),
         ];
 
         if (\in_array($data['class'], $this->getNotFoundExceptions(), true)) {
-            $data['code'] = JsonResponse::HTTP_NOT_FOUND;
+            $data['code'] = Response::HTTP_NOT_FOUND;
         }
 
         if (\in_array($data['class'], $this->getConflictExceptions(), true)) {
-            $data['code'] = JsonResponse::HTTP_CONFLICT;
+            $data['code'] = Response::HTTP_CONFLICT;
         }
 
         if (\in_array($data['class'], $this->getBadRequestExceptions(), true)) {
-            $data['code'] = JsonResponse::HTTP_BAD_REQUEST;
+            $data['code'] = Response::HTTP_BAD_REQUEST;
         }
 
         if ($exception instanceof HttpExceptionInterface) {
@@ -41,7 +42,7 @@ class JsonExceptionTransformerListener
         }
 
         if ($exception instanceof AuthenticationException) {
-            $data['code'] = JsonResponse::HTTP_UNAUTHORIZED;
+            $data['code'] = Response::HTTP_UNAUTHORIZED;
         }
 
         $event->setResponse($this->prepareResponse($data));

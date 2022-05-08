@@ -9,11 +9,11 @@ class ChangePasswordRequest implements RequestDTO
 {
     #[Assert\NotBlank]
     #[Assert\Length(min: 6)]
-    private ?string $oldPass;
+    private readonly ?string $oldPass;
 
     #[Assert\NotBlank]
     #[Assert\Length(min: 6)]
-    private ?string $newPass;
+    private readonly ?string $newPass;
 
     public function __construct(Request $request)
     {

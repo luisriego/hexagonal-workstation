@@ -10,9 +10,9 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class UserVoter extends Voter
 {
-    public const USER_READ = 'USER_READ';
-    public const USER_UPDATE = 'USER_UPDATE';
-    public const USER_DELETE = 'USER_DELETE';
+    public final const USER_READ = 'USER_READ';
+    public final const USER_UPDATE = 'USER_UPDATE';
+    public final const USER_DELETE = 'USER_DELETE';
 
     protected function supports(string $attribute, $subject): bool
     {

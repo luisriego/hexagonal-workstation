@@ -13,6 +13,11 @@ class DoctrineWorkstationRepository extends DoctrineBaseRepository
         return Workstation::class;
     }
 
+    public function findOneById(string $id): ?Workstation
+    {
+        return $this->objectRepository->findOneBy(['id' => $id]);
+    }
+
     public function findOneByIdIfActive(string $id): ?Workstation
     {
         return $this->objectRepository->findOneBy(['id' => $id, 'isActive' => true]);
@@ -21,6 +26,11 @@ class DoctrineWorkstationRepository extends DoctrineBaseRepository
     public function findOneByNumber(string $number): ?Workstation
     {
         return $this->objectRepository->findOneBy(['number' => $number]);
+    }
+
+    public function findOneByNumberIfActive(string $number): ?Workstation
+    {
+        return $this->objectRepository->findOneBy(['number' => $number, 'isActive' => true]);
     }
 
     public function findOneByNumberAndIsActive(string $number): ?Workstation

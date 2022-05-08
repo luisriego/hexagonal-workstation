@@ -9,11 +9,11 @@ class CreateUserRequest implements RequestDTO
 {
     #[Assert\NotBlank]
     #[Assert\Length(min: 3)]
-    private ?string $name;
+    private readonly ?string $name;
 
     #[Assert\NotBlank]
     #[Assert\Email]
-    private ?string $email;
+    private readonly ?string $email;
 
     public function __construct(Request $request)
     {

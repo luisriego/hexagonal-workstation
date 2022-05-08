@@ -10,7 +10,7 @@ use App\Repository\DoctrineUserRepository;
 
 class ChangePasswordService
 {
-    public function __construct(private DoctrineUserRepository $userRepository, private EncodePasswordService $encodePasswordService)
+    public function __construct(private readonly DoctrineUserRepository $userRepository, private readonly EncodePasswordService $encodePasswordService)
     {
     }
 

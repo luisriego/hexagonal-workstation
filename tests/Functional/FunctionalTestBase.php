@@ -6,6 +6,7 @@ namespace App\Tests\Functional;
 
 use App\Repository\DoctrineUserRepository;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 use Hautelook\AliceBundle\PhpUnit\RecreateDatabaseTrait;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -72,13 +73,27 @@ class FunctionalTestBase extends WebTestCase
         return static::$kernel->getContainer()->get('doctrine')->getConnection();
     }
 
+    /**
+     * @throws Exception
+     */
     protected function getLuisId()
     {
         return self::initDBConnection()->executeQuery('SELECT id FROM user WHERE email = "luis@api.com"')->fetchOne();
     }
 
+    /**
+     * @throws Exception
+     */
     protected function getAnotherId()
     {
         return self::initDBConnection()->executeQuery('SELECT id FROM user WHERE email = "another@api.com"')->fetchOne();
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function getWorkstation1234Id()
+    {
+        return self::initDBConnection()->executeQuery('SELECT id FROM workstation WHERE number = "1234"')->fetchOne();
     }
 }

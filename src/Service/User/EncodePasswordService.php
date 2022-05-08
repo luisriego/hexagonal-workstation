@@ -12,7 +12,7 @@ class EncodePasswordService
 {
     private const MINIMUM_LENGTH = 6;
 
-    public function __construct(private UserPasswordHasherInterface $passwordHasher)
+    public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
     {
     }
 

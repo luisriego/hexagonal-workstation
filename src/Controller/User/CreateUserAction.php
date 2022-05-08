@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CreateUserAction
 {
-    public function __construct(private CreateUserService $createUserService)
+    public function __construct(private readonly CreateUserService $createUserService)
     {
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Tests\Functional\Workstation;
 
+use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -9,11 +10,16 @@ class GetWorkstationActionTest extends WorkstationTestBase
 {
 //    private const ENDPOINT = '/api/v1/condos';
 
-    public function testGetCondosById(): void
+    /**
+     * @throws Exception
+     */
+    public function testGetWorkstationById(): void
     {
+        $wsid = $this->get1234WorkstationId();
+
         self::$authenticatedClient->request(
             Request::METHOD_GET,
-            \sprintf('%s/%s', $this->endpoint, $this->getLuisCondoId())
+            \sprintf('%s/%s', $this->endpoint, $this->get1234WorkstationId())
         );
 
         $response = self::$authenticatedClient->getResponse();
@@ -21,11 +27,11 @@ class GetWorkstationActionTest extends WorkstationTestBase
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());
 
         $responseData = \json_decode($response->getContent(), true);
-        self::assertArrayHasKey('cnpj', $responseData);
-        self::assertArrayHasKey('fantasyName', $responseData);
+        self::assertArrayHasKey('number', $responseData);
+        self::assertArrayHasKey('floor', $responseData);
     }
 
-    public function testGetCondosByIdFailWhenCondoNotFound(): void
+    public function testGetWorkstationsByIdFailWhenWorkstationNotFound(): void
     {
         self::$authenticatedClient->request(
             Request::METHOD_GET,
@@ -37,15 +43,18 @@ class GetWorkstationActionTest extends WorkstationTestBase
         self::assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
     }
 
-    public function testGetCondosByIdFailUnauthorized(): void
-    {
-        self::$anotherAuthenticatedClient->request(
-            Request::METHOD_GET,
-            \sprintf('%s/%s', $this->endpoint, $this->getLuisCondoId())
-        );
-
-        $response = self::$anotherAuthenticatedClient->getResponse();
-
-        self::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-    }
+//    /**
+//     * @throws Exception
+//     */
+//    public function testGetWorkstationByIdFailUnauthorized(): void
+//    {
+//        self::$anotherAuthenticatedClient->request(
+//            Request::METHOD_GET,
+//            \sprintf('%s/%s', $this->endpoint, $this->get1234WorkstationId())
+//        );
+//
+//        $response = self::$anotherAuthenticatedClient->getResponse();
+//
+//        self::assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
+//    }
 }

@@ -15,10 +15,10 @@ abstract class DoctrineBaseRepository
     protected ObjectRepository $objectRepository;
 
     public function __construct(
-        private ManagerRegistry $managerRegistry,
+        private readonly ManagerRegistry $managerRegistry,
         public Connection $connection
     ) {
-        $this->objectRepository = $this->getEntityManager()->getRepository($this->entityClass());
+        $this->objectRepository = $this->getEntityManager()->getRepository(static::entityClass());
     }
 
     protected function getEntityManager(): EntityManager | ObjectManager
