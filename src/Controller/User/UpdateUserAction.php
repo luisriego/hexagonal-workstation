@@ -11,13 +11,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class UpdateUserAction
 {
-    public function __construct(private UpdateUserService $updateUserService)
+    public function __construct(private readonly UpdateUserService $updateUserService)
     {
     }
 
     public function __invoke(Request $request, string $id): ApiResponse
     {
-        $responseData = \json_decode($request->getContent(), true);
+        $responseData = \json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
         if (null === $name = $responseData['name']) {
             throw new BadRequestHttpException('Name param is mandatory');

@@ -209,6 +209,9 @@
     "phpspec/prophecy": {
         "version": "1.14.0"
     },
+    "phpstan/phpstan": {
+        "version": "1.6.7"
+    },
     "phpunit/php-code-coverage": {
         "version": "9.2.7"
     },
@@ -261,6 +264,9 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
+    },
+    "rector/rector": {
+        "version": "0.12.23"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"
@@ -400,9 +406,6 @@
             "src/Controller/.gitignore",
             "src/Kernel.php"
         ]
-    },
-    "symfony/http-client-contracts": {
-        "version": "v2.4.0"
     },
     "symfony/http-foundation": {
         "version": "v5.3.7"

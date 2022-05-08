@@ -13,13 +13,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class FileService
 {
-    public const AVATAR_INPUT_NAME = 'avatar';
-    public const DOCUMENT_INPUT_NAME = 'document';
-    public const MEDIA_INPUT_NAME = 'media';
+    public final const AVATAR_INPUT_NAME = 'avatar';
+    public final const DOCUMENT_INPUT_NAME = 'document';
+    public final const MEDIA_INPUT_NAME = 'media';
 
     public function __construct(
-        private FilesystemOperator $localStorage,
-        private LoggerInterface $logger,
+        private readonly FilesystemOperator $localStorage,
+        private readonly LoggerInterface $logger,
         string $mediaPath
     ){ }
 
@@ -54,7 +54,7 @@ class FileService
             if (null !== $path) {
                 $this->localStorage->delete($path);
             }
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $this->logger->warning(\sprintf('File %s not found in the storage', $path));
         }
     }

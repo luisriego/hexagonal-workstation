@@ -11,6 +11,6 @@ class RequestBodyTransformer
 {
     public function transform(Request $request)
     {
-        $request->request = new ParameterBag(\json_decode($request->getContent(), true) ?? []);
+        $request->request = new ParameterBag(\json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR) ?? []);
     }
 }

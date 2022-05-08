@@ -59,33 +59,24 @@ api_upload_avatar:
     controller: App\Controller\User\UploadAvatar
     methods: [POST]
 
-# Condo
-api_condo_add_user:
-    path: /api/v1/condos/{condoId}/user/{userId}
-    controller: App\Controller\Condo\AddUserToCondoAction
-    methods: [PUT]
-
-api_condo_remove_user:
-    path: /api/v1/condos/{condoId}/user/{userId}
-    controller: App\Controller\Condo\RemoveUserFromCondoAction
-    methods: [DELETE]
-
+# Workstations
 api_workstation_create:
     path: /api/v1/workstations/create
     controller: App\Controller\Workstation\CreateWorkstationAction
     methods: [POST]
 
-api_condo_delete:
-    path: /api/v1/condos/{id}
-    controller: App\Controller\Condo\RemoveCondoAction
+api_workstation_delete:
+    path: /api/v1/workstations/{id}
+    controller: App\Controller\Workstation\RemoveWorkstationAction
     methods: [DELETE]
 
-api_condo_get:
-    path: /api/v1/condos/{id}
-    controller: App\Controller\Condo\GetCondoByIdAction
+api_workstation_get:
+    path: /api/v1/workstations/{id}
+    controller: App\Controller\Workstation\GetWorkstationByIdAction
     methods: [GET]
 
-api_condo_update:
-    path: /api/v1/condos/{id}
-    controller: App\Controller\Condo\UpdateCondoAction
+api_workstation_update:
+    path: /api/v1/workstations/{id}
+    controller: App\Controller\Workstation\UpdateWorkstationAction
     methods: [PUT]
+

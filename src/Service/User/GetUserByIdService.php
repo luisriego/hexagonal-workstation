@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GetUserByIdService
 {
-    public function __construct(private DoctrineUserRepository $doctrineUserRepository)
+    public function __construct(private readonly DoctrineUserRepository $doctrineUserRepository)
     {
     }
 

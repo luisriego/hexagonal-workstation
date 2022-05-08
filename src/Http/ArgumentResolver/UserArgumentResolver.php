@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class UserArgumentResolver implements ArgumentValueResolverInterface
 {
-    public function __construct(private TokenStorageInterface $tokenStorage, private DoctrineUserRepository $userRepository)
+    public function __construct(private readonly TokenStorageInterface $tokenStorage, private readonly DoctrineUserRepository $userRepository)
     {
     }
 

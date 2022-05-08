@@ -18,13 +18,13 @@ class UpdateWorkstationAction
 
     public function __invoke(Request $request, string $id, User $user): ApiResponse
     {
-        $responseData = \json_decode($request->getContent(), true);
+        $responseData = \json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
-        if (null === $name = $responseData['fantasyName']) {
-            throw new BadRequestHttpException('The Fantasy Name param is mandatory');
+        if (null === $map = $responseData['map']) {
+            throw new BadRequestHttpException('The Map image param is mandatory');
         }
 
-        $condo = $this->updateWorkstationService->__invoke($name, $id, $user);
+        $condo = $this->updateWorkstationService->__invoke($map, $id);
 
         return new ApiResponse($condo->toArray());
     }

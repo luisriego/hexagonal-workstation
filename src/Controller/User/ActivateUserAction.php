@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ActivateUserAction
 {
-    public function __construct(private ActivateUserService $activateUserService)
+    public function __construct(private readonly ActivateUserService $activateUserService)
     {
     }
 

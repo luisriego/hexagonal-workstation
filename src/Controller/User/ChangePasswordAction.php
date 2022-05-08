@@ -11,7 +11,7 @@ use App\Service\User\ChangePasswordService;
 
 class ChangePasswordAction
 {
-    public function __construct(private ChangePasswordService $changePasswordService)
+    public function __construct(private readonly ChangePasswordService $changePasswordService)
     {
     }
 

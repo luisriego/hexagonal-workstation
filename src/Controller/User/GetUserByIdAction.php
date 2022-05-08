@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class GetUserByIdAction extends ApiController
 {
-    public function __construct(private GetUserByIdService $getUserByIdService)
+    public function __construct(private readonly GetUserByIdService $getUserByIdService)
     {
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
     <entity name="App\Entity\Workstation" table="workstation">
-        <id name="id" type="uuid" />
+        <id name="id" type="string" length="36" column-definition="CHAR(36) NOT NULL" />
 
         <field name="number" length="10" />
         <field name="floor" length="10" />

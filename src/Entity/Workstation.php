@@ -17,17 +17,12 @@ class Workstation
     use IdentifierTrait;
     use IsActiveTrait;
     use TimestampableTrait;
-
-    private string $number;
-    private string $floor;
-    private ?string $map;
+    private ?string $map = null;
 
 
-    public function __construct(string $number, string $floor)
+    public function __construct(private string $number, private string $floor)
     {
         $this->id = Uuid::v4()->toRfc4122();
-        $this->number = $number;
-        $this->floor = $floor;
         $this->isActive = false;
         $this->createdOn = new \DateTimeImmutable();
         $this->markAsUpdated();
@@ -63,13 +58,13 @@ class Workstation
         $this->map = $map;
     }
 
-    #[ArrayShape(['id' => "string", 'floor' => "string", 'number' => "string", 'active' => "false", 'createdOn' => "string", 'updatedOn' => "string"])]
     public function toArray(): array
     {
         return [
             'id' => $this->id,
             'floor' => $this->floor,
             'number' => $this->number,
+            'map' => $this->map,
             'active' => $this->isActive,
             'createdOn' => $this->createdOn->format(\DateTime::RFC3339),
             'updatedOn' => $this->updatedOn->format(\DateTime::RFC3339),

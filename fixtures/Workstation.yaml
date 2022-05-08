@@ -3,3 +3,4 @@ App\Entity\Workstation:
     __construct:
       number: '1234'
       floor: '19'
+    isActive: 1

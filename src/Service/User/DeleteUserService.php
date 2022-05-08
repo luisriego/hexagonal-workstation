@@ -9,7 +9,7 @@ use App\Repository\DoctrineUserRepository;
 
 class DeleteUserService
 {
-    public function __construct(private DoctrineUserRepository $userRepository)
+    public function __construct(private readonly DoctrineUserRepository $userRepository)
     {
     }
 

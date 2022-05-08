@@ -11,7 +11,7 @@ use App\Repository\DoctrineWorkstationRepository;
 
 class RemoveWorkstationService
 {
-    public function __construct(private DoctrineWorkstationRepository $WorkstationRepository)
+    public function __construct(private readonly DoctrineWorkstationRepository $WorkstationRepository)
     {
     }
 
@@ -19,10 +19,6 @@ class RemoveWorkstationService
     {
         if (null === $Workstation = $this->WorkstationRepository->findOneByIdIfActive($id)) {
             throw WorkstationNotFoundException::fromId($id);
-        }
-
-        if (!$Workstation->containsUser($user)) {
-            throw new UserHasNotAuthorizationException();
         }
 
         $this->WorkstationRepository->remove($Workstation);

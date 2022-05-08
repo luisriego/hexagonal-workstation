@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DeleteUserAction
 {
-    public function __construct(private DeleteUserService $deleteUserService)
+    public function __construct(private readonly DeleteUserService $deleteUserService)
     {
     }
 

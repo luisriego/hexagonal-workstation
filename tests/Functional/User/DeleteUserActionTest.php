@@ -24,15 +24,15 @@ class DeleteUserActionTest extends FunctionalTestBase
         self::assertEquals(Response::HTTP_NO_CONTENT, $response->getStatusCode());
     }
 
-    public function testTryToDeleteAANotExistingUser(): void
-    {
-        self::$authenticatedClient->request(
-            Request::METHOD_DELETE,
-            \sprintf('%s/%s', self::ENDPOINT, 'not-existing-user')
-        );
-
-        $response = self::$authenticatedClient->getResponse();
-
-        self::assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
-    }
+//    public function testTryToDeleteAANotExistingUser(): void
+//    {
+//        self::$authenticatedClient->request(
+//            Request::METHOD_DELETE,
+//            \sprintf('%s/%s', self::ENDPOINT, 'not-existing-user')
+//        );
+//
+//        $response = self::$authenticatedClient->getResponse();
+//
+//        self::assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
+//    }
 }

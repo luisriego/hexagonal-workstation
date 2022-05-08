@@ -12,22 +12,20 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-/**
- * @method UserInterface loadUserByIdentifier(string $identifier)
- */
+
 class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
-    public function __construct(private DoctrineUserRepository $userRepository)
+    public function __construct(private readonly DoctrineUserRepository $userRepository)
     {
     }
 
     public function refreshUser(UserInterface $user): UserInterface
     {
         if (!$user instanceof User) {
-            throw new UnsupportedUserException(\sprintf('Instances of %s are not supported', \get_class($user)));
+            throw new UnsupportedUserException(\sprintf('Instances of %s are not supported', $user::class));
         }
 
-        return $this->loadUserByUsername($user->getUsername());
+        return $this->loadUserByIdentifier($user->getUsername());
     }
 
     public function supportsClass(string $class): bool
@@ -35,12 +33,12 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         return User::class === $class;
     }
 
-    public function loadUserByUsername(string $username): UserInterface
+    public function loadUserByIdentifier(string $username): UserInterface
     {
         try {
             return $this->userRepository->findOneByEmailOrFail($username);
-        } catch (UserNotFoundException $e) {
-            throw new UsernameNotFoundException(\sprintf('User %s not found, $username'));
+        } catch (UserNotFoundException) {
+            throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException(\sprintf('User %s not found, $username'));
         }
     }
 
@@ -55,5 +53,14 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         $user->setPassword($newEncodedPassword);
 
         $this->userRepository->save($user);
+    }
+
+    public function loadUserByUsername(string $username)
+    {
+        try {
+            return $this->userRepository->findOneByEmailOrFail($username);
+        } catch (UserNotFoundException) {
+            throw new \Symfony\Component\Security\Core\Exception\UserNotFoundException(\sprintf('User %s not found, $username'));
+        }
     }
 }

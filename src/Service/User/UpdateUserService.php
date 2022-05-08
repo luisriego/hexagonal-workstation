@@ -10,7 +10,7 @@ use App\Repository\DoctrineUserRepository;
 
 class UpdateUserService
 {
-    public function __construct(private DoctrineUserRepository $userRepository)
+    public function __construct(private readonly DoctrineUserRepository $userRepository)
     {
     }
 

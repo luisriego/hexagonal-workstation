@@ -9,15 +9,15 @@ class ActivateUserRequest implements RequestDTO
 {
     #[Assert\NotBlank]
     #[Assert\Email]
-    private ?string $email;
+    private readonly ?string $email;
 
     #[Assert\NotBlank]
     #[Assert\Length(min: 40, max: 40)]
-    private ?string $token;
+    private readonly ?string $token;
 
     #[Assert\NotBlank]
     #[Assert\Length(min: 6, max: 20)]
-    private ?string $password;
+    private readonly ?string $password;
 
     public function __construct(Request $request)
     {

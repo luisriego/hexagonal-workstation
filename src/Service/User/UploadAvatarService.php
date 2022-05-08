@@ -7,18 +7,22 @@ namespace App\Service\User;
 use App\Entity\User;
 use App\Repository\DoctrineUserRepository;
 use App\Service\File\FileService;
+use League\Flysystem\FilesystemException;
 use Symfony\Component\HttpFoundation\Request;
 
 class UploadAvatarService
 {
-    public const VISIBILITY_PUBLIC = 'public';
+    public final const VISIBILITY_PUBLIC = 'public';
 
     public function __construct(
-        private FileService $fileService,
-        private DoctrineUserRepository $userRepository,
-        private string $mediaPath
+        private readonly FileService $fileService,
+        private readonly DoctrineUserRepository $userRepository,
+        private readonly string $mediaPath
     ) { }
 
+    /**
+     * @throws FilesystemException
+     */
     public function uploadAvatar(Request $request, User $user): User
     {
         $file = $this->fileService->validateFile($request, FileService::AVATAR_INPUT_NAME);

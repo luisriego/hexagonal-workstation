@@ -8,7 +8,7 @@ use App\Repository\DoctrineUserRepository;
 
 class ActivateUserService
 {
-    public function __construct(private DoctrineUserRepository $userRepository, private EncodePasswordService $encodePassword)
+    public function __construct(private readonly DoctrineUserRepository $userRepository, private readonly EncodePasswordService $encodePassword)
     {
     }
 
