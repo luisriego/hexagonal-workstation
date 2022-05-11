@@ -4,3 +4,13 @@ App\Entity\Workstation:
       number: '1234'
       floor: '19'
     isActive: 1
+  WS{1..10}:
+    __construct:
+      number: '<($current)>'
+      floor: '19'
+    isActive: 1
+  Workstation-default:
+    __construct:
+      number: 'default'
+      floor: ''
+    isActive: 0

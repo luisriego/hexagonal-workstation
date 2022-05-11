@@ -24,8 +24,8 @@ class UpdateWorkstationAction
             throw new BadRequestHttpException('The Map image param is mandatory');
         }
 
-        $condo = $this->updateWorkstationService->__invoke($map, $id);
+        $workstation = $this->updateWorkstationService->__invoke($map, $id);
 
-        return new ApiResponse($condo->toArray());
+        return new ApiResponse($workstation->toArray());
     }
 }
