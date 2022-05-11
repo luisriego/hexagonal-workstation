@@ -5,9 +5,11 @@ App\Entity\Reservation:
       endDate: <(new \DateTime('2032-06-18'))>
       workstation: '@Workstation-1'
       user: '@User-1'
-#  WS{1..10}:
-#    __construct:
-#      startDate: <(new \DateTime('2022-06-15'))>
-#      endDate: <(new \DateTime('2022-06-16'))>
-#      workstation: '@Workstation-1'
-#      user: '@User-1'
+    isActive: 1
+  WS{1..10}:
+    __construct:
+      startDate: <datetimeBetween('+10 days', '+50 days')>
+      endDate: <datetimeBetween('+50 days', '+70 days')>
+      workstation (unique): <workstation()>
+      user: '@User-1'
+    isActive: 1

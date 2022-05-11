@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Trait\IdentifierTrait;
+use App\Trait\IsActiveTrait;
 use App\Trait\TimestampableTrait;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,7 @@ use Symfony\Component\Uid\Uuid;
 
 class Reservation
 {
-    use IdentifierTrait, TimestampableTrait;
+    use IdentifierTrait, IsActiveTrait, TimestampableTrait;
 
     #[ORM\Column(type: 'datetime', nullable: false) ]
     private DateTime $startDate;

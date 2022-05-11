@@ -6,6 +6,7 @@
         <field name="startDate" type="datetime" nullable="false" />
         <field name="endDate" type="datetime" nullable="false" />
         <field name="notes" type="text" nullable="true" />
+        <field name="isActive" type="boolean" />
         <field name="createdOn" type="datetime_immutable" />
         <field name="updatedOn" type="datetime" />
 
