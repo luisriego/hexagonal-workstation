@@ -1,0 +1,15 @@
+App\Entity\Reservation:
+  Reservation-1:
+    __construct:
+      startDate: <(new \DateTime('2032-06-15'))>
+      endDate: <(new \DateTime('2032-06-18'))>
+      workstation: '@Workstation-1'
+      user: '@User-1'
+    isActive: 1
+  reservation_{1..10}:
+    __construct:
+      startDate: <datetimeBetween('+10 days', '+15 days')>
+      endDate: <datetimeBetween('+10 days', '+15 days')>
+      workstation: '@workstation_*'
+      user: '@User-1'
+    isActive: 1

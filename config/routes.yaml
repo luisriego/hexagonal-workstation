@@ -80,3 +80,8 @@ api_workstation_update:
     controller: App\Controller\Workstation\UpdateWorkstationAction
     methods: [PUT]
 
+# Reservations
+api_reservation_create:
+    path: /api/v1/reservations/create
+    controller: App\Controller\Reservation\CreateReservationAction
+    methods: [POST]
