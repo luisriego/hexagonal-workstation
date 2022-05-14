@@ -15,8 +15,8 @@ class CreateReservationActionTest extends FunctionalTestBase
 
     public function testCreateReservationFailedBecauseUnavailable(): void
     {
-        $start = new DateTime('2032-06-15');
-        $end = new DateTime('2032-06-17');
+        $start = new DateTime('2022-05-15');
+        $end = new DateTime('2022-05-17');
         $payload = [
             'startDate' => $start,
             'endDate' => $end,

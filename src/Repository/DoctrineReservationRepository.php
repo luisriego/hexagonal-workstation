@@ -16,27 +16,31 @@ class DoctrineReservationRepository extends DoctrineBaseRepository
 
     public function findAllActives(): array
     {
-        return $this->objectRepository->findBy([]);
+        return $this->objectRepository->findBy(['isActive' => true], ['workstation' => 'ASC']);
     }
 
-    public function findOneById(string $id): ?Reservation
+    public function findOneReservationWithQueryBuilder(\DateTime $from, \DateTime $to): ?int
     {
-        return $this->objectRepository->findOneBy(['id' => $id]);
+        $qb = $this->objectRepository->createQueryBuilder('r');
+        $query = $qb->andWhere(
+            $qb->expr()->gte('c.updated', ':updateDateTimeStart'),
+            $qb->expr()->lt('c.updated', ':updateDateTimeEnd'),
+        );
+
+        $qb->setParameter('updateDateTimeStart', $from);
+        $qb->setParameter('updateDateTimeEnd', $to);
+
+        return $query->getFirstResult();
     }
 
-    public function findOneByIdIfActive(string $id): ?Reservation
+    public function findOneReservationAndIsActive(\DateTime $from, \DateTime $to): ?Reservation
     {
-        return $this->objectRepository->findOneBy(['id' => $id, 'isActive' => true]);
-    }
+        $query = $this->getEntityManager()->createQuery(
+            'SELECT r FROM App\Entity\Reservation r WHERE (e.fecha BETWEEN :from AND :to)'
+        );
+        $query->setParameters(['from' => $from, 'to' => $to]);
 
-    public function findOneByNumber(string $number): ?Reservation
-    {
-        return $this->objectRepository->findOneBy(['number' => $number]);
-    }
-
-    public function findOneByNumberIfActive(string $number): ?Reservation
-    {
-        return $this->objectRepository->findOneBy(['number' => $number, 'isActive' => true]);
+        return $query->getOneOrNullResult();
     }
 
     public function save(Reservation $reservation): void

@@ -6,10 +6,10 @@ App\Entity\Reservation:
       workstation: '@Workstation-1'
       user: '@User-1'
     isActive: 1
-  WS{1..10}:
+  reservation_{1..10}:
     __construct:
-      startDate: <datetimeBetween('+10 days', '+50 days')>
-      endDate: <datetimeBetween('+50 days', '+70 days')>
-      workstation (unique): <workstation()>
+      startDate: <datetimeBetween('+10 days', '+15 days')>
+      endDate: <datetimeBetween('+10 days', '+15 days')>
+      workstation: '@workstation_*'
       user: '@User-1'
     isActive: 1
