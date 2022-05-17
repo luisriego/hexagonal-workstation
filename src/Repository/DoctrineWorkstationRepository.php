@@ -13,6 +13,11 @@ class DoctrineWorkstationRepository extends DoctrineBaseRepository
         return Workstation::class;
     }
 
+    public function findAllActives(): ?array
+    {
+        return $this->objectRepository->findBy(['isActive' => 1]);
+    }
+
     public function findOneById(string $id): ?Workstation
     {
         return $this->objectRepository->findOneBy(['id' => $id]);

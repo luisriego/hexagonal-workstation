@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Reservation;
+use Doctrine\ORM\NonUniqueResultException;
 
 class DoctrineReservationRepository extends DoctrineBaseRepository
 {
@@ -23,24 +24,31 @@ class DoctrineReservationRepository extends DoctrineBaseRepository
     {
         $qb = $this->objectRepository->createQueryBuilder('r');
         $query = $qb->andWhere(
-            $qb->expr()->gte('c.updated', ':updateDateTimeStart'),
-            $qb->expr()->lt('c.updated', ':updateDateTimeEnd'),
+            $qb->expr()->gte('r.startDate', ':from'),
+            $qb->expr()->lt('r.endDate', ':to'),
         );
 
-        $qb->setParameter('updateDateTimeStart', $from);
-        $qb->setParameter('updateDateTimeEnd', $to);
+        $qb->setParameter('from', $from);
+        $qb->setParameter('to', $to);
 
         return $query->getFirstResult();
     }
 
-    public function findOneReservationAndIsActive(\DateTime $from, \DateTime $to): ?Reservation
-    {
-        $query = $this->getEntityManager()->createQuery(
-            'SELECT r FROM App\Entity\Reservation r WHERE (e.fecha BETWEEN :from AND :to)'
-        );
-        $query->setParameters(['from' => $from, 'to' => $to]);
 
-        return $query->getOneOrNullResult();
+    public function findOneReservationAndIsActive(\DateTime $from, \DateTime $to): Reservation|array|null
+    {
+        $qb = $this->objectRepository->createQueryBuilder("r");
+        $qb
+            ->andWhere('r.startDate < :from')
+            ->andWhere('r.startDate < :to')
+            ->andWhere('r.endDate > :from')
+            ->andWhere('r.endDate > :to')
+            ->setParameter('from', $from )
+            ->setParameter('to', $to)
+        ;
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
     }
 
     public function save(Reservation $reservation): void

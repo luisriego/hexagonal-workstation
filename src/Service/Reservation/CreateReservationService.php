@@ -11,6 +11,7 @@ use App\Exception\Reservation\DateException;
 use App\Exception\Reservation\ReservationNotFoundException;
 use App\Repository\DoctrineReservationRepository;
 use App\Repository\DoctrineWorkstationRepository;
+use Exception;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -23,6 +24,9 @@ class CreateReservationService
     ) {
     }
 
+    /**
+     * @throws Exception
+     */
     public function __invoke(string $start, string $end, string $workstation_id = '', string $notes = ''): Reservation
     {
         /** @var User|UserInterface $user */
@@ -60,22 +64,26 @@ class CreateReservationService
 
     private function findFreeWorkstation(\DateTime $startDate, \DateTime $endDate): ?Workstation
     {
-        $reservations = $this->reservationRepository->findAllActives();
+        $wsInRv = [];
+        $wsIds = [];
+        $reservations = $this->reservationRepository->findOneReservationAndIsActive($startDate, $endDate);
+        $workstations = $this->workstationRepository->findAllActives();
         foreach ($reservations as $reservation) {
-            if (!$this->between($startDate, $reservation)) {
-
-            }
-//            if ($reservation->getStartDate() <= $startDate & $reservation->getEndDate() >= $startDate) {
-//                return null;
-//            }
-//
-//            if ($reservation->getStartDate() <= $endDate & $reservation->getEndDate() >= $endDate) {
-//                return null;
-//            }
-//
-//            return $reservation->getWorkstation();
+            $wsInRv[] = $reservation->getWorkstation()->getId();
         }
-        return null;
+        foreach ($workstations as $workstation) {
+            $wsIds[] = $workstation->getId();
+        }
+        $freeWs = array_udiff($wsIds, $wsInRv,
+            function ($obj_a, $obj_b) {
+                if ($obj_a === $obj_b) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            }
+        );
+        return $this->workstationRepository->findOneById($freeWs[0]);
     }
 
     private function between(\DateTime $date, Reservation $reservation): bool
