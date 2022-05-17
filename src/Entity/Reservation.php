@@ -36,6 +36,7 @@ class Reservation
         $this->id = Uuid::v4()->toRfc4122();
         $this->startDate = $startDate;
         $this->endDate = $endDate;
+        $this->isActive = 0;
         $this->workstation = $workstation;
         $this->user = $user;
         $this->createdOn = new \DateTimeImmutable();
