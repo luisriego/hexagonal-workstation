@@ -7,7 +7,7 @@ namespace App\Repository;
 use App\Entity\Reservation;
 use Doctrine\ORM\NonUniqueResultException;
 
-class DoctrineReservationRepository extends DoctrineBaseRepository
+class DoctrineReservationRepository extends DoctrineBaseRepository implements ReservationRepository
 {
     protected static function entityClass(): string
     {
