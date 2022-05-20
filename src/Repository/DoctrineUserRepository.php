@@ -8,7 +8,7 @@ use App\Entity\User;
 use App\Exception\User\UserNotFoundException;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
-class DoctrineUserRepository extends DoctrineBaseRepository
+class DoctrineUserRepository extends DoctrineBaseRepository implements UserRepository
 {
     protected static function entityClass(): string
     {

@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace App\Service\Reservation;
 
 use App\Entity\Reservation;
-use App\Entity\User;
 use App\Entity\Workstation;
 use App\Exception\Reservation\DateException;
 use App\Exception\Reservation\ReservationNotFoundException;
 use App\Repository\DoctrineReservationRepository;
 use App\Repository\DoctrineWorkstationRepository;
+use DateTime;
 use Exception;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class CreateReservationService
 {
@@ -29,12 +28,9 @@ class CreateReservationService
      */
     public function __invoke(string $start, string $end, string $workstation_id = '', string $notes = ''): Reservation
     {
-        /** @var User|UserInterface $user */
-        $user = $this->security->getUser();
-
-        $today = new \DateTime();
-        $startDate = new \DateTime($start);
-        $endDate = new \DateTime($end);
+        $today = new DateTime();
+        $startDate = new DateTime($start);
+        $endDate = new DateTime($end);
 
         if ($startDate < $today) {
             throw DateException::StartDateBeforeToday();
@@ -45,7 +41,6 @@ class CreateReservationService
         }
 
         if ($workstation_id === '') {
-//            $workstation = $this->workstationRepository->findOneByNumber('default');
             if (null === $workstation = $this->findFreeWorkstation($startDate, $endDate)) {
                 throw DateException::DateUnavailable();
             }
@@ -53,7 +48,7 @@ class CreateReservationService
             throw ReservationNotFoundException::fromId($workstation_id);
         }
 
-        $reservation = new Reservation($startDate, $endDate, $workstation, $user);
+        $reservation = new Reservation($startDate, $endDate, $workstation, $this->security->getUser());
         if ($notes !== '') {
             $reservation->setNotes($notes);
         }
@@ -62,11 +57,11 @@ class CreateReservationService
         return $reservation;
     }
 
-    private function findFreeWorkstation(\DateTime $startDate, \DateTime $endDate): ?Workstation
+    private function findFreeWorkstation(DateTime $startDate, DateTime $endDate): ?Workstation
     {
         $wsInRv = [];
         $wsIds = [];
-        $reservations = $this->reservationRepository->findOneReservationAndIsActive($startDate, $endDate);
+        $reservations = $this->reservationRepository->findReservationsActives($startDate, $endDate);
         $workstations = $this->workstationRepository->findAllActives();
         foreach ($reservations as $reservation) {
             $wsInRv[] = $reservation->getWorkstation()->getId();
@@ -83,19 +78,6 @@ class CreateReservationService
                 }
             }
         );
-        return $this->workstationRepository->findOneById($freeWs[0]);
-    }
-
-    private function between(\DateTime $date, Reservation $reservation): bool
-    {
-        if ($date < $reservation->getStartDate()) {
-            return false;
-        }
-
-        if ($date > $reservation->getEndDate()) {
-            return false;
-        }
-
-        return true;
+        return $this->workstationRepository->findOneByIdIfActive($freeWs[0]);
     }
 }

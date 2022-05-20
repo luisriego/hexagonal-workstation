@@ -35,7 +35,7 @@ class DoctrineReservationRepository extends DoctrineBaseRepository implements Re
     }
 
 
-    public function findOneReservationAndIsActive(\DateTime $from, \DateTime $to): Reservation|array|null
+    public function findReservationsActives(\DateTime $from, \DateTime $to): Reservation|array|null
     {
         $qb = $this->objectRepository->createQueryBuilder("r");
         $qb

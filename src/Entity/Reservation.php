@@ -8,6 +8,7 @@ use App\Trait\TimestampableTrait;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\ArrayShape;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
 class Reservation
@@ -29,9 +30,9 @@ class Reservation
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
-    private User $user;
+    private UserInterface $user;
 
-    public function __construct(DateTime $startDate, DateTime $endDate, Workstation $workstation, User $user)
+    public function __construct(DateTime $startDate, DateTime $endDate, Workstation $workstation, UserInterface $user)
     {
         $this->id = Uuid::v4()->toRfc4122();
         $this->startDate = $startDate;
