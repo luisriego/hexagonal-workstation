@@ -6,7 +6,7 @@ namespace App\Repository;
 
 use App\Entity\Workstation;
 
-class DoctrineWorkstationRepository extends DoctrineBaseRepository
+class DoctrineWorkstationRepository extends DoctrineBaseRepository implements WorkstationRepository
 {
     protected static function entityClass(): string
     {
@@ -33,20 +33,20 @@ class DoctrineWorkstationRepository extends DoctrineBaseRepository
         return $this->objectRepository->findOneBy(['number' => $number]);
     }
 
-    public function findOneByNumberIfActive(string $number): ?Workstation
-    {
-        return $this->objectRepository->findOneBy(['number' => $number, 'isActive' => true]);
-    }
-
-    public function findOneByNumberAndIsActive(string $number): ?Workstation
-    {
-        $query = $this->getEntityManager()->createQuery(
-            'SELECT c FROM App\Entity\Workstation c WHERE (c.number = :number AND c.isActive = true)'
-        );
-        $query->setParameter('number', $number);
-
-        return $query->getOneOrNullResult();
-    }
+//    public function findOneByNumberIfActive(string $number): ?Workstation
+//    {
+//        return $this->objectRepository->findOneBy(['number' => $number, 'isActive' => true]);
+//    }
+//
+//    public function findOneByNumberAndIsActive(string $number): ?Workstation
+//    {
+//        $query = $this->getEntityManager()->createQuery(
+//            'SELECT c FROM App\Entity\Workstation c WHERE (c.number = :number AND c.isActive = true)'
+//        );
+//        $query->setParameter('number', $number);
+//
+//        return $query->getOneOrNullResult();
+//    }
 
     public function save(Workstation $workstation): void
     {

@@ -7,7 +7,7 @@ namespace App\Repository;
 use App\Entity\Reservation;
 use Doctrine\ORM\NonUniqueResultException;
 
-class DoctrineReservationRepository extends DoctrineBaseRepository
+class DoctrineReservationRepository extends DoctrineBaseRepository implements ReservationRepository
 {
     protected static function entityClass(): string
     {
@@ -35,7 +35,7 @@ class DoctrineReservationRepository extends DoctrineBaseRepository
     }
 
 
-    public function findOneReservationAndIsActive(\DateTime $from, \DateTime $to): Reservation|array|null
+    public function findReservationsActives(\DateTime $from, \DateTime $to): Reservation|array|null
     {
         $qb = $this->objectRepository->createQueryBuilder("r");
         $qb
