@@ -26,3 +26,28 @@ Happy coding!
 - Run `sf d:m:m -n --env=test` to apply migrations on test enviroment
 
 If .pem has access problems: 'chmod 644 public.pem private.pem'
+
+
+### SQL Try
+  $subQueryBuilder = $this->getEntityManager()->createQueryBuilder();
+        $subQuery = $subQueryBuilder
+            ->select('prop.id')
+            ->from('App:Reservation', 'reservation')
+            ->orWhere('reservation.startDate BETWEEN :checkInDate AND :checkOutDate')
+            ->orWhere('reservation.endDate BETWEEN :checkInDate AND :checkOutDate')
+            ->orWhere('reservation.startDate <= :checkInDate AND reservation.endDate >= :checkOutDate')
+            ->andWhere('reservation.confirmedAt IS NOT NULL')
+            ->andWhere('reservation.rating IS NULL')
+            ->innerJoin('reservation.property', 'prop')
+        ;
+        
+  $properties = $this->createQueryBuilder('p')
+        ->select('p')
+        ->andWhere('p.approved = 1')
+        ->andWhere($properties->expr()->notIn('p.id',  $subQuery->getDQL()))
+        ->andWhere('reservations.confirmedAt IS NOT NULL')
+        ->andWhere('reservations.rating IS NULL')
+        ->setParameter('checkInDate', new \DateTime($checkIn))
+        ->setParameter('checkOutDate', new \DateTime($checkOut))
+        ->innerJoin('p.reservations', 'reservations')
+        ->getQuery();
