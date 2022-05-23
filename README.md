@@ -31,8 +31,8 @@ If .pem has access problems: 'chmod 644 public.pem private.pem'
 ### SQL Try
 https://stackoverflow.com/questions/68380201/booking-system-using-query-builder-and-symfony
 
-  ´´´
-  $subQueryBuilder = $this->getEntityManager()->createQueryBuilder();
+```
+$subQueryBuilder = $this->getEntityManager()->createQueryBuilder();
         $subQuery = $subQueryBuilder
             ->select('prop.id')
             ->from('App:Reservation', 'reservation')
@@ -54,4 +54,5 @@ https://stackoverflow.com/questions/68380201/booking-system-using-query-builder-
         ->setParameter('checkOutDate', new \DateTime($checkOut))
         ->innerJoin('p.reservations', 'reservations')
         ->getQuery();
-  ´´´
+```
+  
