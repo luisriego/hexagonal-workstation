@@ -5,7 +5,7 @@ This repository contains the basic configuration for a complete local environmen
 
 ### Content:
 - NGINX 1.19 container to handle HTTP requests
-- PHP 8.0.1 container to host your Symfony application
+- PHP 8.1.1 container to host your Symfony application
 - MySQL 8.0 container to store databases
 
 (feel free to update any version in `Dockerfiles` and ports in `docker-compose.yml`)
@@ -26,3 +26,33 @@ Happy coding!
 - Run `sf d:m:m -n --env=test` to apply migrations on test enviroment
 
 If .pem has access problems: 'chmod 644 public.pem private.pem'
+
+
+### SQL Try
+https://stackoverflow.com/questions/68380201/booking-system-using-query-builder-and-symfony
+
+```
+$subQueryBuilder = $this->getEntityManager()->createQueryBuilder();
+        $subQuery = $subQueryBuilder
+            ->select('prop.id')
+            ->from('App:Reservation', 'reservation')
+            ->orWhere('reservation.startDate BETWEEN :checkInDate AND :checkOutDate')
+            ->orWhere('reservation.endDate BETWEEN :checkInDate AND :checkOutDate')
+            ->orWhere('reservation.startDate <= :checkInDate AND reservation.endDate >= :checkOutDate')
+            ->andWhere('reservation.confirmedAt IS NOT NULL')
+            ->andWhere('reservation.rating IS NULL')
+            ->innerJoin('reservation.property', 'prop')
+        ;
+        
+  $properties = $this->createQueryBuilder('p')
+        ->select('p')
+        ->andWhere('p.approved = 1')
+        ->andWhere($properties->expr()->notIn('p.id',  $subQuery->getDQL()))
+        ->andWhere('reservations.confirmedAt IS NOT NULL')
+        ->andWhere('reservations.rating IS NULL')
+        ->setParameter('checkInDate', new \DateTime($checkIn))
+        ->setParameter('checkOutDate', new \DateTime($checkOut))
+        ->innerJoin('p.reservations', 'reservations')
+        ->getQuery();
+```
+  
