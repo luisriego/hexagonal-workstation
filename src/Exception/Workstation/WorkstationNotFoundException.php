@@ -8,6 +8,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WorkstationNotFoundException extends NotFoundHttpException
 {
+    public static function inDatabase(): never
+    {
+        throw new self('No Workstation found in Database with this parameters');
+    }
+
     public static function fromNumber(string $number): never
     {
         throw new self(\sprintf('Workstation with Number %s not found', $number));

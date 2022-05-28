@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Workstation;
+use App\Exception\Workstation\WorkstationNotFoundException;
+use Doctrine\ORM\NonUniqueResultException;
 
 class DoctrineWorkstationRepository extends DoctrineBaseRepository implements WorkstationRepository
 {
@@ -16,6 +18,11 @@ class DoctrineWorkstationRepository extends DoctrineBaseRepository implements Wo
     public function findAllActives(): ?array
     {
         return $this->objectRepository->findBy(['isActive' => 1]);
+    }
+
+    public function findOneActive(): ?Workstation
+    {
+        return $this->objectRepository->findOneBy(['isActive' => 1]);
     }
 
     public function findOneById(string $id): ?Workstation
@@ -33,20 +40,19 @@ class DoctrineWorkstationRepository extends DoctrineBaseRepository implements Wo
         return $this->objectRepository->findOneBy(['number' => $number]);
     }
 
-//    public function findOneByNumberIfActive(string $number): ?Workstation
-//    {
-//        return $this->objectRepository->findOneBy(['number' => $number, 'isActive' => true]);
-//    }
-//
-//    public function findOneByNumberAndIsActive(string $number): ?Workstation
-//    {
-//        $query = $this->getEntityManager()->createQuery(
-//            'SELECT c FROM App\Entity\Workstation c WHERE (c.number = :number AND c.isActive = true)'
-//        );
-//        $query->setParameter('number', $number);
-//
-//        return $query->getOneOrNullResult();
-//    }
+    public function notIn(array $workstations): ?Workstation
+    {
+        $query = $this->getEntityManager()->createQuery("SELECT w FROM App\Entity\Workstation w WHERE w.id NOT IN (:ws)")
+            ->setParameter('ws', $workstations)
+            ->getResult()
+        ;
+
+        if (count($query) === 0) {
+            return null;
+        }
+
+        return $query[0];
+    }
 
     public function save(Workstation $workstation): void
     {

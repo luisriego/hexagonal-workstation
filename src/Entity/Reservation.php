@@ -99,14 +99,14 @@ class Reservation
     {
         return $this->workstation;
     }
-
-    /**
-     * @return User
-     */
-    public function getUser(): User
-    {
-        return $this->user;
-    }
+//
+//    /**
+//     * @return User
+//     */
+//    public function getUser(): User
+//    {
+//        return $this->user;
+//    }
 
 
     #[ArrayShape(['id' => "string", 'startDate' => "\_PHPStan_7bd9fb728\Nette\Utils\DateTime", 'endDate' => "\_PHPStan_7bd9fb728\Nette\Utils\DateTime", 'notes' => "null|string", 'workstation' => "\App\Entity\Workstation", 'user' => "\App\Entity\User"])]
@@ -117,12 +117,11 @@ class Reservation
             'startDate' => $this->startDate,
             'endDate' => $this->endDate,
             'notes' => $this->notes,
-            'workstation' => $this->workstation,
-            'user' => $this->user,
+            'workstation' => $this->workstation->getId(),
+            'user' => $this->user->getid(),
         ];
     }
 
-    #[ArrayShape(['id' => "string", 'startDate' => "\_PHPStan_7bd9fb728\Nette\Utils\DateTime", 'endDate' => "\_PHPStan_7bd9fb728\Nette\Utils\DateTime", 'notes' => "null|string", 'workstation' => "\App\Entity\Workstation", 'user' => "\App\Entity\User", 'createdOn' => "string", 'updatedOn' => "string"])]
     public function toArrayComplete(): array
     {
         return [
