@@ -8,8 +8,8 @@ App\Entity\Reservation:
     isActive: 1
   reservation_{1..10}:
     __construct:
-      startDate: <datetimeBetween('+8 days', '+15 days')>
-      endDate: <datetimeBetween('+10 days', '+15 days')>
+      startDate: <datetimeBetween('+8 days', '+25 days')>
+      endDate: <datetimeBetween('+10 days', '+25 days')>
       workstation: '@workstation_*'
-      user: '@User-1'
+      user: '@user_*'
     isActive: 1

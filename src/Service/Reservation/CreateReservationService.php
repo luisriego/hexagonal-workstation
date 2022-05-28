@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace App\Service\Reservation;
 
 use App\Entity\Reservation;
+use App\Entity\User;
 use App\Entity\Workstation;
 use App\Exception\Reservation\DateException;
-use App\Exception\Reservation\ReservationNotFoundException;
+use App\Exception\User\UserHasMadeReservationException;
 use App\Repository\DoctrineReservationRepository;
 use App\Repository\DoctrineWorkstationRepository;
 use DateTime;
+use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class CreateReservationService
 {
@@ -28,6 +31,8 @@ class CreateReservationService
      */
     public function __invoke(string $start, string $end, string $workstation_id = '', string $notes = ''): Reservation
     {
+        /** @var User $user */
+        $user = $this->security->getUser();
         $today = new DateTime();
         $startDate = new DateTime($start);
         $endDate = new DateTime($end);
@@ -40,15 +45,11 @@ class CreateReservationService
             throw DateException::EndDateBeforeStartDate();
         }
 
-        if ($workstation_id === '') {
-            if (null === $workstation = $this->findFreeWorkstation($startDate, $endDate)) {
-                throw DateException::DateUnavailable();
-            }
-        } elseif (null === $workstation = $this->workstationRepository->findOneById($workstation_id)) {
-            throw ReservationNotFoundException::fromId($workstation_id);
+        if (null === $workstation = $this->findFreeWorkstation($startDate, $endDate, $user->getId(), $workstation_id)) {
+            throw DateException::DateUnavailable();
         }
 
-        $reservation = new Reservation($startDate, $endDate, $workstation, $this->security->getUser());
+        $reservation = new Reservation($startDate, $endDate, $workstation, $user);
         if ($notes !== '') {
             $reservation->setNotes($notes);
         }
@@ -57,11 +58,40 @@ class CreateReservationService
         return $reservation;
     }
 
-    private function findFreeWorkstation(DateTime $startDate, DateTime $endDate): ?Workstation
+    /**
+     * @throws NonUniqueResultException
+     */
+    private function findFreeWorkstation(DateTime $startDate, DateTime $endDate, string $user, string $workstation_id): ?Workstation
+    {
+        if ($this->reservationRepository->userHasRequestThisReservationYet($startDate, $endDate, $user)) {
+            throw UserHasMadeReservationException::yet();
+        }
+
+        if ($workstation_id === '') {
+            $reservationsUsedYet = $this->reservationRepository->findReservationsUsedYet($startDate, $endDate);
+
+            if (count($reservationsUsedYet) === 0) {
+                return $this->workstationRepository->findOneActive();
+            }
+
+            return $this->workstationRepository->notIn($reservationsUsedYet);
+        }
+
+        $reservation = $this->reservationRepository->findReservationWithWorkstation($startDate, $endDate, $workstation_id);
+
+        if (null !== $reservation) {
+            return null;
+        }
+
+        return $this->workstationRepository->findOneByIdIfActive($workstation_id);
+    }
+
+    private function findFreeWorkstation2(DateTime $startDate, DateTime $endDate, string $user): ?Workstation
     {
         $wsInRv = [];
         $wsIds = [];
-        $reservations = $this->reservationRepository->findReservationsActives($startDate, $endDate);
+        $reservations = $this->reservationRepository->findAllActivesBetween($startDate, $endDate);
+
         $workstations = $this->workstationRepository->findAllActives();
         foreach ($reservations as $reservation) {
             $wsInRv[] = $reservation->getWorkstation()->getId();

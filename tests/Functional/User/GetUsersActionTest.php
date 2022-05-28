@@ -21,10 +21,10 @@ class GetUsersActionTest extends FunctionalTestBase
         self::assertEquals(JsonResponse::HTTP_OK, $response->getStatusCode());
 
         $responseData = \json_decode($response->getContent(), true);
-        self::assertCount(2, $responseData['users']);
+        self::assertCount(7, $responseData['users']);
     }
 
-    public function testGetAllUsersFailBecauseUnauthorize(): void
+    public function testGetAllUsersFailBecauseUnauthorized(): void
     {
         self::$baseClient->request(Request::METHOD_GET, \sprintf('%s', self::ENDPOINT));
 

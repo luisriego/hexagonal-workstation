@@ -20,6 +20,6 @@ class DateException extends BadRequestHttpException
 
     public static function DateUnavailable(): never
     {
-        throw new self('This date is unavaliable for this workstation');
+        throw new self('These dates are not available for this workstation');
     }
 }

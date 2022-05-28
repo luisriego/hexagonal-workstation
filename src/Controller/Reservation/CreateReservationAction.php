@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Reservation;
 
-use App\Entity\Workstation;
 use App\Http\DTO\CreateReservationRequest;
 use App\Service\Reservation\CreateReservationService;
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,6 +16,9 @@ class CreateReservationAction
     {
     }
 
+    /**
+     * @throws Exception
+     */
     public function __invoke(CreateReservationRequest $request): JsonResponse
     {
         $reservation = $this->createReservationService->__invoke(

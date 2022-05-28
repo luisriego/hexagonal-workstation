@@ -9,14 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateReservationRequest implements RequestDTO
 {
-    #[Assert\NotBlank]
-//    #[Assert\GreaterThan('today')]
     public readonly ?string $startDate;
-
-    #[Assert\NotBlank]
-//    #[Assert\GreaterThan('startDate')]
     public readonly ?string $endDate;
-
     public readonly ?string $workstation;
     public readonly ?string $notes;
 
