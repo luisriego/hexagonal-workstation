@@ -21,7 +21,7 @@ abstract class DoctrineBaseRepository
         $this->objectRepository = $this->getEntityManager()->getRepository(static::entityClass());
     }
 
-    protected function getEntityManager(): EntityManager | ObjectManager
+    protected function getEntityManager(): EntityManager|ObjectManager
     {
         $entityManager = $this->managerRegistry->getManager();
 

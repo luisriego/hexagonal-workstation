@@ -14,7 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 class UploadAvatar
 {
     public function __construct(private readonly UploadAvatarService $uploadAvatarService)
-    { }
+    {
+    }
 
     /**
      * @throws FilesystemException

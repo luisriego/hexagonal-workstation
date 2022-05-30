@@ -12,13 +12,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UploadAvatarService
 {
-    public final const VISIBILITY_PUBLIC = 'public';
+    final public const VISIBILITY_PUBLIC = 'public';
 
     public function __construct(
         private readonly FileService $fileService,
         private readonly DoctrineUserRepository $userRepository,
         private readonly string $mediaPath
-    ) { }
+    ) {
+    }
 
     /**
      * @throws FilesystemException

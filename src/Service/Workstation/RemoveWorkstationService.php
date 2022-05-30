@@ -6,7 +6,6 @@ namespace App\Service\Workstation;
 
 use App\Entity\User;
 use App\Exception\Workstation\WorkstationNotFoundException;
-use App\Exception\User\UserHasNotAuthorizationException;
 use App\Repository\DoctrineWorkstationRepository;
 
 class RemoveWorkstationService

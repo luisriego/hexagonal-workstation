@@ -4,6 +4,7 @@ namespace App\Tests\Functional\Reservation;
 
 use App\Entity\Reservation;
 use App\Tests\Functional\FunctionalTestBase;
+use Doctrine\DBAL\Exception;
 
 class ReservationTestBase extends FunctionalTestBase
 {
@@ -17,8 +18,11 @@ class ReservationTestBase extends FunctionalTestBase
     }
 
 
-    protected function getWorkstation1234Id(): ?Reservation
+    /**
+     * @throws Exception
+     */
+    protected function getReservationId(): ?string
     {
-        return $this->initDbConnection()->query('SELECT id FROM reservation WHERE fantasy_name = "Luis Condo"')->fetchColumn(0);
+        return $this->initDbConnection()->query('SELECT id FROM reservation WHERE notes = "Luis User"')->fetchOne(0);
     }
 }

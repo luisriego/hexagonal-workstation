@@ -15,7 +15,6 @@ use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class CreateReservationService
 {
@@ -50,7 +49,7 @@ class CreateReservationService
         }
 
         $reservation = new Reservation($startDate, $endDate, $workstation, $user);
-        if ($notes !== '') {
+        if ('' !== $notes) {
             $reservation->setNotes($notes);
         }
         $this->reservationRepository->save($reservation);
@@ -67,10 +66,10 @@ class CreateReservationService
             throw UserHasMadeReservationException::yet();
         }
 
-        if ($workstation_id === '') {
+        if ('' === $workstation_id) {
             $reservationsUsedYet = $this->reservationRepository->findReservationsUsedYet($startDate, $endDate);
 
-            if (count($reservationsUsedYet) === 0) {
+            if (0 === count($reservationsUsedYet)) {
                 return $this->workstationRepository->findOneActive();
             }
 
@@ -108,6 +107,7 @@ class CreateReservationService
                 }
             }
         );
+
         return $this->workstationRepository->findOneByIdIfActive($freeWs[0]);
     }
 }

@@ -13,15 +13,16 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class FileService
 {
-    public final const AVATAR_INPUT_NAME = 'avatar';
-    public final const DOCUMENT_INPUT_NAME = 'document';
-    public final const MEDIA_INPUT_NAME = 'media';
+    final public const AVATAR_INPUT_NAME = 'avatar';
+    final public const DOCUMENT_INPUT_NAME = 'document';
+    final public const MEDIA_INPUT_NAME = 'media';
 
     public function __construct(
         private readonly FilesystemOperator $localStorage,
         private readonly LoggerInterface $logger,
         string $mediaPath
-    ){ }
+    ) {
+    }
 
     /**
      * @throws FilesystemException

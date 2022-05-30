@@ -6,6 +6,7 @@ App\Entity\Reservation:
       workstation: '@Workstation-1'
       user: '@User-1'
     isActive: 1
+    notes: 'Luis User'
   reservation_{1..10}:
     __construct:
       startDate: <datetimeBetween('+8 days', '+25 days')>

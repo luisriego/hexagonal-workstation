@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Workstation;
 
-use App\Entity\Workstation;
 use App\Entity\User;
+use App\Entity\Workstation;
 use App\Exception\Workstation\WorkstationAlreadyExistsException;
 use App\Repository\DoctrineWorkstationRepository;
 
