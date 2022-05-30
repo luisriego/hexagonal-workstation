@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Workstation;
-use App\Exception\Workstation\WorkstationNotFoundException;
-use Doctrine\ORM\NonUniqueResultException;
 
 class DoctrineWorkstationRepository extends DoctrineBaseRepository implements WorkstationRepository
 {
@@ -47,7 +45,7 @@ class DoctrineWorkstationRepository extends DoctrineBaseRepository implements Wo
             ->getResult()
         ;
 
-        if (count($query) === 0) {
+        if (0 === count($query)) {
             return null;
         }
 

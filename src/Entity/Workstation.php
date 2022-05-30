@@ -88,7 +88,7 @@ class Workstation
         return $this;
     }
 
-    #[ArrayShape(['id' => "string", 'floor' => "string", 'number' => "string", 'map' => "null|string"])]
+    #[ArrayShape(['id' => 'string', 'floor' => 'string', 'number' => 'string', 'map' => 'null|string'])]
     public function toArraySimple(): array
     {
         return [
@@ -99,7 +99,7 @@ class Workstation
         ];
     }
 
-    #[ArrayShape(['id' => "string", 'floor' => "string", 'number' => "string", 'map' => "null|string", 'active' => "false", 'createdOn' => "string", 'updatedOn' => "string"])]
+    #[ArrayShape(['id' => 'string', 'floor' => 'string', 'number' => 'string', 'map' => 'null|string', 'active' => 'false', 'createdOn' => 'string', 'updatedOn' => 'string'])]
     public function toArray(): array
     {
         return [
@@ -113,7 +113,7 @@ class Workstation
         ];
     }
 
-    #[ArrayShape(['id' => "string", 'floor' => "string", 'number' => "string", 'map' => "null|string", 'reservation' => "\Doctrine\Common\Collections\ArrayCollection", 'active' => "false", 'createdOn' => "string", 'updatedOn' => "string"])]
+    #[ArrayShape(['id' => 'string', 'floor' => 'string', 'number' => 'string', 'map' => 'null|string', 'reservation' => "\Doctrine\Common\Collections\ArrayCollection", 'active' => 'false', 'createdOn' => 'string', 'updatedOn' => 'string'])]
     public function toArrayComplete(): array
     {
         return [

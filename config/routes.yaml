@@ -85,3 +85,8 @@ api_reservation_create:
     path: /api/v1/reservations/create
     controller: App\Controller\Reservation\CreateReservationAction
     methods: [POST]
+
+api_reservation_delete:
+    path: /api/v1/reservations/{id}
+    controller: App\Controller\Reservation\RemoveReservationAction
+    methods: [DELETE]

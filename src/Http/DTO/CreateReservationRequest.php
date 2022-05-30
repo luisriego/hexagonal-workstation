@@ -2,10 +2,8 @@
 
 namespace App\Http\DTO;
 
-
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateReservationRequest implements RequestDTO
 {
@@ -13,7 +11,6 @@ class CreateReservationRequest implements RequestDTO
     public readonly ?string $endDate;
     public readonly ?string $workstation;
     public readonly ?string $notes;
-
 
     /**
      * @throws Exception

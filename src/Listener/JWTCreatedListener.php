@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Listener;
 
-use App\Entity\User;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 
 class JWTCreatedListener

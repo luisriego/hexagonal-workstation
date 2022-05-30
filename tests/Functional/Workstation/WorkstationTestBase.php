@@ -24,8 +24,6 @@ class WorkstationTestBase extends FunctionalTestBase
      */
     protected function get1234WorkstationId()
     {
-        $value = $this->initDbConnection()->query('SELECT id FROM workstation WHERE number = "1234"')->fetchOne(0);
-
-        return $value;
+        return $this->initDbConnection()->query('SELECT id FROM workstation WHERE number = "1234"')->fetchOne(0);
     }
 }

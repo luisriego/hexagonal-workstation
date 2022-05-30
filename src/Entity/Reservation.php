@@ -13,7 +13,9 @@ use Symfony\Component\Uid\Uuid;
 
 class Reservation
 {
-    use IdentifierTrait, IsActiveTrait, TimestampableTrait;
+    use IdentifierTrait;
+    use IsActiveTrait;
+    use TimestampableTrait;
 
     #[ORM\Column(type: 'datetime', nullable: false) ]
     private DateTime $startDate;
@@ -44,72 +46,50 @@ class Reservation
         $this->markAsUpdated();
     }
 
-    /**
-     * @return DateTime
-     */
     public function getStartDate(): DateTime
     {
         return $this->startDate;
     }
 
-    /**
-     * @param DateTime $startDate
-     */
     public function setStartDate(DateTime $startDate): void
     {
         $this->startDate = $startDate;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getEndDate(): DateTime
     {
         return $this->endDate;
     }
 
-    /**
-     * @param DateTime $endDate
-     */
     public function setEndDate(DateTime $endDate): void
     {
         $this->endDate = $endDate;
     }
 
-    /**
-     * @return string|null
-     */
     public function getNotes(): ?string
     {
         return $this->notes;
     }
 
-    /**
-     * @param string|null $notes
-     */
     public function setNotes(?string $notes): void
     {
         $this->notes = $notes;
     }
 
-    /**
-     * @return Workstation
-     */
     public function getWorkstation(): Workstation
     {
         return $this->workstation;
     }
-//
-//    /**
-//     * @return User
-//     */
-//    public function getUser(): User
-//    {
-//        return $this->user;
-//    }
 
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
 
-    #[ArrayShape(['id' => "string", 'startDate' => "\_PHPStan_7bd9fb728\Nette\Utils\DateTime", 'endDate' => "\_PHPStan_7bd9fb728\Nette\Utils\DateTime", 'notes' => "null|string", 'workstation' => "\App\Entity\Workstation", 'user' => "\App\Entity\User"])]
+    #[ArrayShape(['id' => 'string', 'startDate' => "\_PHPStan_7bd9fb728\Nette\Utils\DateTime", 'endDate' => "\_PHPStan_7bd9fb728\Nette\Utils\DateTime", 'notes' => 'null|string', 'workstation' => "\App\Entity\Workstation", 'user' => "\App\Entity\User"])]
     public function toArray(): array
     {
         return [

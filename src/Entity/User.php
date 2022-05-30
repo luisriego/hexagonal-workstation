@@ -7,8 +7,6 @@ namespace App\Entity;
 use App\Trait\IdentifierTrait;
 use App\Trait\IsActiveTrait;
 use App\Trait\TimestampableTrait;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Security\Core\User\UserInterface;

@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Reservation;
-use App\Entity\User;
 use App\Entity\Workstation;
 use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\NoResultException;
 
 class DoctrineReservationRepository extends DoctrineBaseRepository implements ReservationRepository
 {
@@ -18,17 +17,33 @@ class DoctrineReservationRepository extends DoctrineBaseRepository implements Re
         return Reservation::class;
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findOneActiveById(string $id): ?Reservation
+    {
+        $qb = $this->objectRepository->createQueryBuilder('r');
+        $qb
+            ->andWhere('r.id = :id')
+            ->andWhere('r.isActive = 1')
+            ->setParameter('id', $id)
+        ;
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
     public function findAllActivesBetween(DateTime $from, DateTime $to): Reservation|array|null
     {
-        $qb = $this->objectRepository->createQueryBuilder("r");
+        $qb = $this->objectRepository->createQueryBuilder('r');
         $qb
             ->andWhere('r.startDate < :from')
             ->andWhere('r.startDate < :to')
             ->andWhere('r.endDate > :from')
             ->andWhere('r.endDate > :to')
-            ->setParameter('from', $from )
+            ->setParameter('from', $from)
             ->setParameter('to', $to)
         ;
+
         return $qb->getQuery()->getResult();
     }
 
@@ -41,8 +56,6 @@ class DoctrineReservationRepository extends DoctrineBaseRepository implements Re
     {
         $this->removeEntity($reservation);
     }
-
-
 
 //
 //    public function findAllActives(): array
@@ -64,11 +77,10 @@ class DoctrineReservationRepository extends DoctrineBaseRepository implements Re
 //        return $query->getFirstResult();
 //    }
 
-
     public function findReservationsUsedYet(DateTime $from, DateTime $to): ?array
     {
         $subQueryBuilder = $this->objectRepository->createQueryBuilder('r');
-            $sq = $subQueryBuilder
+        $sq = $subQueryBuilder
                 ->select('ws.id')
                 ->distinct()
                 ->from('App:Reservation', 'reservation')
@@ -76,7 +88,7 @@ class DoctrineReservationRepository extends DoctrineBaseRepository implements Re
                 ->orWhere('reservation.endDate BETWEEN :from AND :to')
                 ->orWhere('reservation.startDate <= :from AND reservation.endDate >= :to')
                 ->innerJoin('reservation.workstation', 'ws')
-                ->setParameter('from', $from )
+                ->setParameter('from', $from)
                 ->setParameter('to', $to)
                 ->getQuery()
             ;
@@ -92,7 +104,7 @@ class DoctrineReservationRepository extends DoctrineBaseRepository implements Re
             ->orWhere('r.endDate BETWEEN :from AND :to')
             ->orWhere('r.startDate <= :from AND r.endDate >= :to')
             ->andWhere('r.user = :user')
-            ->setParameter('from', $from )
+            ->setParameter('from', $from)
             ->setParameter('to', $to)
             ->setParameter('user', $user)
             ->getQuery()
@@ -100,7 +112,7 @@ class DoctrineReservationRepository extends DoctrineBaseRepository implements Re
 
         $results = count($sq->getResult());
 
-        if ($results !== 0) {
+        if (0 !== $results) {
             return true;
         }
 
@@ -118,7 +130,7 @@ class DoctrineReservationRepository extends DoctrineBaseRepository implements Re
             ->orWhere('r.endDate BETWEEN :from AND :to')
             ->orWhere('r.startDate <= :from AND r.endDate >= :to')
             ->andWhere('r.workstation = :workstation')
-            ->setParameter('from', $from )
+            ->setParameter('from', $from)
             ->setParameter('to', $to)
             ->setParameter('workstation', $workstation)
             ->getQuery()
