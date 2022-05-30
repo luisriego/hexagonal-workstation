@@ -8,7 +8,6 @@ use App\Entity\Reservation;
 use App\Entity\Workstation;
 use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 
 class DoctrineReservationRepository extends DoctrineBaseRepository implements ReservationRepository
 {

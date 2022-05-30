@@ -26,3 +26,11 @@ Happy coding!
 - Run `sf d:m:m -n --env=test` to apply migrations on test enviroment
 
 If .pem has access problems: 'chmod 644 public.pem private.pem'
+
+#### To php cs-fixer
+to install:
+    
+    composer require --dev friendsofphp/php-cs-fixer
+to exec:
+
+    vendor/bin/php-cs-fixer fix src

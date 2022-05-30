@@ -2,7 +2,6 @@
 
 namespace App\Controller\Reservation;
 
-use App\Entity\User;
 use App\Http\Response\ApiResponse;
 use App\Service\Reservation\RemoveReservationService;
 use Doctrine\ORM\NonUniqueResultException;

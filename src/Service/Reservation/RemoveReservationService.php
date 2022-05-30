@@ -7,7 +7,6 @@ namespace App\Service\Reservation;
 use App\Entity\User;
 use App\Exception\Reservation\ReservationNotFoundException;
 use App\Exception\User\UserHasNotAuthorizationException;
-use App\Exception\User\UserNotFoundException;
 use App\Repository\DoctrineReservationRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\Security\Core\Security;
