@@ -27,6 +27,13 @@ Happy coding!
 
 If .pem has access problems: 'chmod 644 public.pem private.pem'
 
+#### To php cs-fixer
+to install:
+    
+    composer require --dev friendsofphp/php-cs-fixer
+to exec:
+
+    vendor/bin/php-cs-fixer fix src
 
 ### SQL Try
 https://stackoverflow.com/questions/68380201/booking-system-using-query-builder-and-symfony
@@ -55,4 +62,4 @@ $subQueryBuilder = $this->getEntityManager()->createQueryBuilder();
         ->innerJoin('p.reservations', 'reservations')
         ->getQuery();
 ```
-  
+

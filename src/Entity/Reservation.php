@@ -81,9 +81,6 @@ class Reservation
         return $this->workstation;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;

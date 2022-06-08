@@ -26,7 +26,7 @@ class RemoveReservationActionTest extends ReservationTestBase
     /**
      * @throws Exception
      */
-    public function testRemoveReservationFailedBecauseOnotherUser(): void
+    public function testRemoveReservationFailedBecauseAnotherUser(): void
     {
         self::$anotherAuthenticatedClient->request(
             Request::METHOD_DELETE,
