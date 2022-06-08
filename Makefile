@@ -57,3 +57,5 @@ generate-ssh-keys: ## Generates SSH keys for the JWT library
 
 .PHONY: migrations
 
+tests: ## Run tests
+	./make.sh tests ${DOCKER_BE}
