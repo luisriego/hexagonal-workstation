@@ -58,4 +58,4 @@ generate-ssh-keys: ## Generates SSH keys for the JWT library
 .PHONY: migrations
 
 tests: ## Run tests
-	./make.sh tests ${DOCKER_BE}
+	U_ID=${UID} docker exec --user ${UID} ${DOCKER_BE} vendor/bin/simple-phpunit -c phpunit.xml.dist 2> /dev/null || true
