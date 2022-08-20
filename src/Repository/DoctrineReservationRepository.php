@@ -90,7 +90,7 @@ class DoctrineReservationRepository extends DoctrineBaseRepository implements Re
                 ->setParameter('from', $from)
                 ->setParameter('to', $to)
                 ->getQuery()
-            ;
+        ;
 
         return $sq->getResult();
     }

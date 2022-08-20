@@ -23,7 +23,7 @@ Happy coding!
 
 ### For testing
 - Insert phpunit testing with composer 'composer require --dev phpunit/phpunit symfony/test-pack'
-- Run `sf d:m:m -n --env=test` to apply migrations on test enviroment
+- Run `sf d:m:m -n --env=test` to apply migrations on test environment
 
 If .pem has access problems: 'chmod 644 public.pem private.pem'
 

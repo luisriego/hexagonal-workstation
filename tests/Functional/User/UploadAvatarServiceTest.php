@@ -31,7 +31,7 @@ class UploadAvatarServiceTest extends FunctionalTestBase
         self::assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
     }
 
-    public function testUploadAvatarWithWrongImputName(): void
+    public function testUploadAvatarWithWrongInputName(): void
     {
         $avatar = new UploadedFile(
             __DIR__.'/../../../fixtures/avatar.jpg',
