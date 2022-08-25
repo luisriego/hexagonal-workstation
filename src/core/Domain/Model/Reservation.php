@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\core\Domain\Model;
 
 use App\Trait\IdentifierTrait;
 use App\Trait\IsActiveTrait;

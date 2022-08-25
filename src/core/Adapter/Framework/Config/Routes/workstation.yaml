@@ -1,0 +1,19 @@
+api_workstation_create:
+  path: /api/v1/workstations/create
+  controller: App\Controller\Workstation\CreateWorkstationAction
+  methods: [POST]
+
+api_workstation_delete:
+  path: /api/v1/workstations/{id}
+  controller: App\Controller\Workstation\RemoveWorkstationAction
+  methods: [DELETE]
+
+api_workstation_get:
+  path: /api/v1/workstations/{id}
+  controller: App\Controller\Workstation\GetWorkstationByIdAction
+  methods: [GET]
+
+api_workstation_update:
+  path: /api/v1/workstations/{id}
+  controller: App\Controller\Workstation\UpdateWorkstationAction
+  methods: [PUT]

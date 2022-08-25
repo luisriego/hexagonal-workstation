@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\core\Domain\Model\Reservation" table="reservation">
+        <id name="id" type="string" length="36" column-definition="CHAR(36) NOT NULL"/>
+
+        <field name="startDate" type="datetime" nullable="false" />
+        <field name="endDate" type="datetime" nullable="false" />
+        <field name="notes" type="text" nullable="true" />
+        <field name="isActive" type="boolean" />
+        <field name="createdOn" type="datetime_immutable" />
+        <field name="updatedOn" type="datetime" />
+
+        <many-to-one field="workstation" target-entity="App\Entity\Workstation">
+            <join-column name="workstation_id" on-delete="CASCADE" />
+        </many-to-one>
+
+        <many-to-one field="user" target-entity="App\Entity\User">
+            <join-column name="user_id" on-delete="CASCADE" />
+        </many-to-one>
+
+        <indexes>
+            <index columns="workstation_id" name="IDX_reservation_workstation_id" />
+            <index columns="user_id" name="IDX_reservation_user_id" />
+        </indexes>
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="preUpdate" method="markAsUpdated"/>
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

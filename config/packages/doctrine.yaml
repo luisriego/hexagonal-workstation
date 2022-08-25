@@ -13,6 +13,10 @@ doctrine:
                 dir: '%kernel.project_dir%/config/orm/mapping'
                 prefix: 'App\Entity'
                 alias: App
+#                # core option
+#                dir: '%kernel.project_dir%/src/core/Adapter/Database/ORM/Doctrine/Mapping'
+#                prefix: 'core\Domain\Model'
+#                alias: core\Domain\Model
 
 when@test:
     doctrine:

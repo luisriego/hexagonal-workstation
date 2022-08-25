@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\app\Domain;
+namespace App\core\Domain\Model;
 
-use App\Entity\Reservation;
 use App\Trait\IdentifierTrait;
 use App\Trait\IsActiveTrait;
 use App\Trait\TimestampableTrait;

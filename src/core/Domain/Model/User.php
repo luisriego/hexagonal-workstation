@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\core\Domain\Model;
 
 use App\Trait\IdentifierTrait;
 use App\Trait\IsActiveTrait;
@@ -17,17 +17,36 @@ class User implements UserInterface
     use IdentifierTrait;
     use TimestampableTrait;
     use IsActiveTrait;
-    private ?string $avatar = null;
-    private ?string $token;
-    private ?string $password = null;
+    public const NAME_MIN_LENGTH = 2;
+    public const NAME_MAX_LENGTH = 10;
+    public const MIN_AGE = 18;
 
-    public function __construct(private string $name, private readonly string $email)
+    private function __construct(
+        protected readonly string $id,
+        private string $name,
+        private readonly string $email,
+        private ?string $avatar,
+        private ?string $token,
+        private ?string $password,
+        protected bool $isActive,
+        protected \DateTimeImmutable $createdOn,
+        protected \DateTime $updatedOn
+    ) {
+    }
+
+    public static function create(?string $name, ?string $email, ?string $password = null): self
     {
-        $this->id = Uuid::v4()->toRfc4122();
-        $this->token = \sha1(\uniqid());
-        $this->isActive = false;
-        $this->createdOn = new \DateTimeImmutable();
-        $this->markAsUpdated();
+        return new static(
+            Uuid::v4()->toRfc4122(),
+            $name,
+            $email,
+            '',
+            \sha1(\uniqid()),
+            $password,
+            false,
+            new \DateTimeImmutable(),
+            new \DateTime()
+        );
     }
 
     public function getName(): string
@@ -44,11 +63,6 @@ class User implements UserInterface
     {
         return $this->email;
     }
-//
-//    public function setEmail(string $email): void
-//    {
-//        $this->email = $email;
-//    }
 
     public function getToken(): ?string
     {

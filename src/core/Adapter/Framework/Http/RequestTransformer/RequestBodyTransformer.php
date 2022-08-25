@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\core\Adapter\Framework\Http\RequestTransformer;
+
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Request;
+
+class RequestBodyTransformer
+{
+    public function transform(Request $request)
+    {
+        $request->request = new ParameterBag(\json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR) ?? []);
+    }
+}
